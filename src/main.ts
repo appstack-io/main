@@ -74,7 +74,7 @@ const main = async (opts: {
           transport: Transport.GRPC,
           options: {
             package: ['main'],
-            protoPath: `${opts.publicMicroservicesModule.getFileName()}.proto`,
+            protoPath: `${opts.publicMicroservicesModule.__filename}.proto`,
             url: `localhost:${process.env.ASIO_MS_PUBLIC_PORT}`,
           },
           logger: new JsonLoggerService(),
@@ -100,7 +100,7 @@ const main = async (opts: {
             transport: Transport.GRPC,
             options: {
               package: ['main'],
-              protoPath: `${opts.privateMicroservicesModule.getFileName()}.proto`,
+              protoPath: `${opts.privateMicroservicesModule.__filename}.proto`,
               url: `localhost:${process.env.ASIO_MS_PRIVATE_PORT}`,
             },
             logger: new JsonLoggerService(),
@@ -180,7 +180,7 @@ const main = async (opts: {
           transport: Transport.GRPC,
           options: {
             package: ['main'],
-            protoPath: `${opts.workersModule.getFileName()}.proto`,
+            protoPath: `${opts.workersModule.__filename}.proto`,
             url: `localhost:${process.env.ASIO_WORKERS_PORT}`,
           },
           logger: new JsonLoggerService(),
