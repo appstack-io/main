@@ -62,13 +62,6 @@ const main = async (opts: {
   privateHttpModule?: any;
   workersModule?: any;
   pubsubModule?: any;
-  ports: {
-    proto: number;
-    protoInternal: number;
-    http: number;
-    httpInternal: number;
-    workers: number;
-  };
   otel?: boolean;
 }) => {
   if (opts.otel) otelSDK().start();
@@ -82,8 +75,8 @@ const main = async (opts: {
           transport: Transport.GRPC,
           options: {
             package: ['main'],
-            protoPath: opts.publicMicroservicesModule.protoPath(), //join(__dirname, '..', 'proto', `combined.proto`),
-            url: `localhost:${opts.ports.proto}`,
+            protoPath: opts.publicMicroservicesModule.protoPath(),
+            url: `localhost:${opts.publicMicroservicesModule.port()}`,
           },
           logger: new JsonLoggerService(),
         },
@@ -109,7 +102,7 @@ const main = async (opts: {
             options: {
               package: ['main'],
               protoPath: opts.privateMicroservicesModule.protoPath(), //join(__dirname, '..', 'proto', `combined.proto`),
-              url: `localhost:${opts.ports.protoInternal}`,
+              url: `localhost:4502`,
             },
             logger: new JsonLoggerService(),
           },
@@ -150,7 +143,7 @@ const main = async (opts: {
         new LoggingInterceptorHttp(),
         new HttpAuthExternalInterceptor(),
       );
-      await http.listen(opts.ports.http);
+      await http.listen(4503);
       return () => http.close();
     },
   });
@@ -174,7 +167,7 @@ const main = async (opts: {
         new LoggingInterceptorHttp(),
         new HttpAuthInternalInterceptor(),
       );
-      await http.listen(opts.ports.httpInternal);
+      await http.listen(4504);
       return () => http.close();
     },
   });
@@ -189,7 +182,7 @@ const main = async (opts: {
           options: {
             package: ['main'],
             protoPath: join(__dirname, '..', 'proto', `combined.proto`),
-            url: `localhost:${opts.ports.workers}`,
+            url: `localhost:${4505}`,
           },
           logger: new JsonLoggerService(),
         },
