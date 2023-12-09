@@ -7,7 +7,6 @@ import {
 import '@appstack-io/config';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { join } from 'path';
 import {
   AllExceptionsFilter,
   RpcExceptionsFilter,
@@ -76,7 +75,7 @@ const main = async (opts: {
           options: {
             package: ['main'],
             protoPath: opts.publicMicroservicesModule.protoPath(),
-            url: `localhost:${opts.publicMicroservicesModule.port()}`,
+            url: `localhost:${process.env.ASIO_MS_PUBLIC_PORT}`,
           },
           logger: new JsonLoggerService(),
         },
@@ -101,8 +100,8 @@ const main = async (opts: {
             transport: Transport.GRPC,
             options: {
               package: ['main'],
-              protoPath: opts.privateMicroservicesModule.protoPath(), //join(__dirname, '..', 'proto', `combined.proto`),
-              url: `localhost:4502`,
+              protoPath: opts.privateMicroservicesModule.protoPath(),
+              url: `localhost:${process.env.ASIO_MS_PRIVATE_PORT}`,
             },
             logger: new JsonLoggerService(),
           },
@@ -124,14 +123,14 @@ const main = async (opts: {
         logger: new JsonLoggerService(),
       });
       http.enableCors({
-        origin: process.env.WEB_CLIENT_URL,
+        origin: process.env.ASIO_WEB_CLIENT_URL,
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         allowedHeaders: 'Content-Type, Accept',
         credentials: true,
       });
       http.use(
         session({
-          secret: process.env.SESSION_SECRET,
+          secret: process.env.ASIO_SESSION_SECRET,
           resave: false,
           saveUninitialized: false,
         }),
@@ -143,7 +142,7 @@ const main = async (opts: {
         new LoggingInterceptorHttp(),
         new HttpAuthExternalInterceptor(),
       );
-      await http.listen(4503);
+      await http.listen(process.env.ASIO_HTTP_PUBLIC_PORT);
       return () => http.close();
     },
   });
@@ -156,7 +155,7 @@ const main = async (opts: {
       });
       http.use(
         session({
-          secret: process.env.SESSION_SECRET,
+          secret: process.env.ASIO_SESSION_SECRET,
           resave: false,
           saveUninitialized: false,
         }),
@@ -167,7 +166,7 @@ const main = async (opts: {
         new LoggingInterceptorHttp(),
         new HttpAuthInternalInterceptor(),
       );
-      await http.listen(4504);
+      await http.listen(process.env.ASIO_HTTP_PRIVATE_PORT);
       return () => http.close();
     },
   });
@@ -181,8 +180,8 @@ const main = async (opts: {
           transport: Transport.GRPC,
           options: {
             package: ['main'],
-            protoPath: join(__dirname, '..', 'proto', `combined.proto`),
-            url: `localhost:${4505}`,
+            protoPath: opts.workersModule.protoPath(),
+            url: `localhost:${process.env.ASIO_WORKERS_PORT}`,
           },
           logger: new JsonLoggerService(),
         },
