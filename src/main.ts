@@ -82,7 +82,7 @@ const main = async (opts: {
           transport: Transport.GRPC,
           options: {
             package: ['main'],
-            protoPath: join(__dirname, '..', 'proto', `combined.proto`),
+            protoPath: opts.publicMicroservicesModule.protoPath(), //join(__dirname, '..', 'proto', `combined.proto`),
             url: `localhost:${opts.ports.proto}`,
           },
           logger: new JsonLoggerService(),
@@ -108,7 +108,7 @@ const main = async (opts: {
             transport: Transport.GRPC,
             options: {
               package: ['main'],
-              protoPath: join(__dirname, '..', 'proto', `combined.proto`),
+              protoPath: opts.privateMicroservicesModule.protoPath(), //join(__dirname, '..', 'proto', `combined.proto`),
               url: `localhost:${opts.ports.protoInternal}`,
             },
             logger: new JsonLoggerService(),
