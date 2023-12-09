@@ -180,7 +180,7 @@ const main = async (opts: {
           transport: Transport.GRPC,
           options: {
             package: ['main'],
-            protoPath: opts.workersModule.protoPath(),
+            protoPath: `${opts.workersModule.getFileName()}.proto`,
             url: `localhost:${process.env.ASIO_WORKERS_PORT}`,
           },
           logger: new JsonLoggerService(),
