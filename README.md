@@ -1,1 +1,1 @@
-# main
+# @appstack-io/main
