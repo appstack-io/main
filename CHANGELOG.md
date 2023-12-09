@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.0.5 - 2023-12-09
+#### Bug Fixes
+- protoPath - (4205001) - orgal
+#### Miscellaneous Chores
+- bump version to 0.0.4 - (cb94fa4) - GitHub Action
+- - -
+
 ## 0.0.4 - 2023-12-09
 #### Bug Fixes
 - init - (a759f40) - orgal
