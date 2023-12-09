@@ -23,14 +23,14 @@ import * as process from 'process';
 import * as cookieParser from 'cookie-parser';
 
 type Component = {
-  clss: any;
+  add: any;
   init: () => Promise<() => Promise<void>>;
   shutdown?: () => Promise<void>;
 };
 
 const components: Component[] = [];
 const addComponent = (component: Component) => {
-  if (component.clss) {
+  if (component.add) {
     components.push({
       shutdown: async () => {
         return;
@@ -66,7 +66,7 @@ const main = async (opts: {
   if (opts.otel) otelSDK().start();
 
   addComponent({
-    clss: opts.publicMicroservicesModule,
+    add: opts.publicMicroservicesModule,
     init: async () => {
       const proto = await NestFactory.createMicroservice<MicroserviceOptions>(
         opts.publicMicroservicesModule,
@@ -91,7 +91,7 @@ const main = async (opts: {
   });
 
   addComponent({
-    clss: opts.privateMicroservicesModule,
+    add: opts.privateMicroservicesModule,
     init: async () => {
       const protoInternal =
         await NestFactory.createMicroservice<MicroserviceOptions>(
@@ -117,7 +117,7 @@ const main = async (opts: {
   });
 
   addComponent({
-    clss: opts.publicHttpModule,
+    add: opts.publicHttpModule,
     init: async () => {
       const http = await NestFactory.create(opts.publicHttpModule, {
         logger: new JsonLoggerService(),
@@ -148,7 +148,7 @@ const main = async (opts: {
   });
 
   addComponent({
-    clss: opts.privateHttpModule,
+    add: opts.privateHttpModule,
     init: async () => {
       const http = await NestFactory.create(opts.privateHttpModule, {
         logger: new JsonLoggerService(),
@@ -172,7 +172,7 @@ const main = async (opts: {
   });
 
   addComponent({
-    clss: opts.workersModule,
+    add: opts.workersModule,
     init: async () => {
       const workers = await NestFactory.createMicroservice<MicroserviceOptions>(
         opts.workersModule,
@@ -194,7 +194,7 @@ const main = async (opts: {
   });
 
   addComponent({
-    clss: opts.pubsubModule,
+    add: opts.pubsubModule,
     init: async () => {
       const pubsub = await NestFactory.createApplicationContext(
         opts.pubsubModule,
