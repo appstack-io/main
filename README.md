@@ -1,3 +1,4 @@
 # @appstack-io/main
-Main appstack entry point
+- Main appstack entry point
+- Composable
 
