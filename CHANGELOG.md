@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.0.3 - 2023-12-09
+#### Bug Fixes
+- init - (f4a7f46) - orgal
+#### Miscellaneous Chores
+- bump version to 0.0.2 - (45e3e37) - GitHub Action
+- - -
+
 ## 0.0.2 - 2023-12-09
 #### Bug Fixes
 - init - (7a5e4d0) - orgal
