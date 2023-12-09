@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## 0.0.11 - 2023-12-09
+#### Bug Fixes
+- proto fetching - (6577948) - orgal
+#### Miscellaneous Chores
+- bump version to 0.0.10 - (b1f6c01) - GitHub Action
+- - -
+
 ## 0.0.10 - 2023-12-09
 #### Bug Fixes
 - proto fetching - (52c0a9f) - orgal
