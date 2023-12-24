@@ -75,7 +75,7 @@ const main = async (opts: {
           options: {
             package: ['main'],
             protoPath: `${opts.publicMicroservicesModule.__filename}.proto`,
-            url: `localhost:${process.env.ASIO_MS_PUBLIC_PORT}`,
+            url: `0.0.0.0:${process.env.ASIO_MS_PUBLIC_PORT}`,
           },
           logger: new JsonLoggerService(),
         },
@@ -101,7 +101,7 @@ const main = async (opts: {
             options: {
               package: ['main'],
               protoPath: `${opts.privateMicroservicesModule.__filename}.proto`,
-              url: `localhost:${process.env.ASIO_MS_PRIVATE_PORT}`,
+              url: `0.0.0.0:${process.env.ASIO_MS_PRIVATE_PORT}`,
             },
             logger: new JsonLoggerService(),
           },
@@ -181,7 +181,7 @@ const main = async (opts: {
           options: {
             package: ['main'],
             protoPath: `${opts.workersModule.__filename}.proto`,
-            url: `localhost:${process.env.ASIO_WORKERS_PORT}`,
+            url: `0.0.0.0:${process.env.ASIO_WORKERS_PORT}`,
           },
           logger: new JsonLoggerService(),
         },
